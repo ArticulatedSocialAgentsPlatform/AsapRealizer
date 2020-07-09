@@ -254,7 +254,8 @@ public class AnimationPlanPlayer implements PlanPlayer
         defPlayer.reset(time);
     }
 
-    public RestPose getDefaultRestPose() {
+    public RestPose getDefaultRestPose()
+    {
         return defaultRestPose;
     }
 
