@@ -98,12 +98,6 @@ public interface RestPose
      */
     void initialRestPose(double time);
     
-
-    /**
-     * Return a reference to the pose tree
-     */
-    void initialRestPose(double time, VJoint dst);
-
     /**
      * Return a reference to the pose tree
      */
