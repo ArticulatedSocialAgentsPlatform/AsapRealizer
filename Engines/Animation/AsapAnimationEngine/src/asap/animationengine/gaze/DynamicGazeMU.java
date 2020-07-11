@@ -363,8 +363,11 @@ public class DynamicGazeMU extends AbstractGazeMU
         Quat4f.setFromVectors(qGaze, Vec3f.getVec3f(0, 0, 1), gazeDir);
     }
 
-    private static final String[] NECK_JOINTS = new String[] { Hanim.vc6, Hanim.vc5, Hanim.vc4, Hanim.vc3, Hanim.vc2, Hanim.vc1};//, Hanim.skullbase };
-    public static final String[] CERVICAL_JOINTS = new String[] { Hanim.vc7, Hanim.vc6, Hanim.vc5, Hanim.vc4, Hanim.vc3, Hanim.vc2, Hanim.vc1};//, skullbase };
+    //I've added back the skullbase in these two joint collections, since it was causing problems in the gaze of UMA agents. 
+    //Specifically, all rotations required for moving the head were applied to the vc4 joint (at the base of the neck) which looked very odd/unnatural.
+    //FIXME: @Dennis: you originally removed the skullbase to fix a different issue, can you remember what and why?
+    private static final String[] NECK_JOINTS = new String[] { Hanim.vc6, Hanim.vc5, Hanim.vc4, Hanim.vc3, Hanim.vc2, Hanim.vc1, Hanim.skullbase };
+    public static final String[] CERVICAL_JOINTS = new String[] { Hanim.vc7, Hanim.vc6, Hanim.vc5, Hanim.vc4, Hanim.vc3, Hanim.vc2, Hanim.vc1, Hanim.skullbase };
 
     private List<VJoint> getShoulderJoints(VJoint grp)
     {
