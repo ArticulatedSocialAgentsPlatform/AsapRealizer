@@ -122,7 +122,7 @@ public class EmitterEngineLoader implements EngineLoader
         planManager = new PlanManager<TimedEmitterUnit>();
         PlanPlayer planPlayer = new SingleThreadedPlanPlayer<TimedEmitterUnit>(are.getFeedbackManager(), planManager);
         player = new DefaultPlayer(planPlayer);
-        EmitterPlanner planner = new EmitterPlanner(are.getFeedbackManager(), planManager, ei, are.getRealizerPort());
+        EmitterPlanner planner = new EmitterPlanner(are.getFeedbackManager(), planManager, ei, are.getRealizerPort(), characterId);
         engine = new DefaultEngine<TimedEmitterUnit>(planner, player, planManager);
         engine.setId(id);
         engine.setCharacterId(characterId);

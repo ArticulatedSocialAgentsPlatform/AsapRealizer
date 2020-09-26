@@ -39,6 +39,7 @@ public class BreathingEmitter extends Emitter implements Runnable
     private Thread theThread = null;
     private Logger logger = LoggerFactory.getLogger(BreathingEmitter.class.getName());
     private String id = null;
+    private String characterId = null;
 
     /** The realizerbridge */
     protected RealizerPort realizerBridge = null;
@@ -112,9 +113,16 @@ public class BreathingEmitter extends Emitter implements Runnable
 
     protected void emitBreath()
     {
+        String _characterId = "";
+        String _bmlId = "breathbml";
+        if (characterId != null) {
+            _characterId = " characterId=\""+characterId+"\" ";
+            _bmlId = characterId+_bmlId;
+        }
+
         lastbreath = System.currentTimeMillis();
-        scheduling = "composition=\"APPEND-AFTER(breathbml" + breathcount + ")\"";
-        String bml = "<bml xmlns=\"http://www.bml-initiative.org/bml/bml-1.0\" " + "id=\"breathbml" + (breathcount + 1) + "\" "
+        scheduling = "composition=\"APPEND-AFTER("+_bmlId+ breathcount + ")\"";
+        String bml = "<bml xmlns=\"http://www.bml-initiative.org/bml/bml-1.0\" " + _characterId + " id=\""+_bmlId+ (breathcount + 1) + "\" "
                 + scheduling + " xmlns:bmla=\"http://www.asap-project.org/bmla\">" + "<gesture id=\"b1\" lexeme=\"breathe\" start=\"0\" "
                 + "ready=\"0\" stroke=\"" + (currentwaitingtime / 4) + "\" relax=\"" + (2 * currentwaitingtime / 3) + "\" end=\""
                 + currentwaitingtime + "\" "
@@ -122,7 +130,7 @@ public class BreathingEmitter extends Emitter implements Runnable
                 + " />";
         if (breathcount > 1)
         {
-            bml += "<bmla:interrupt id=\"interruptPrevBreath\" target=\"breathbml" + breathcount + "\">" + "</bmla:interrupt>";
+            bml += "<bmla:interrupt id=\"interruptPrevBreath\" target=\""+ _bmlId + breathcount + "\">" + "</bmla:interrupt>";
         }
         realizerBridge.performBML(bml + "</bml>");
 
@@ -188,6 +196,18 @@ public class BreathingEmitter extends Emitter implements Runnable
     public void setRealizerPort(RealizerPort port)
     {
         realizerBridge = port;
+    }
+
+    @Override
+    public void setCharacterId(String characterId)
+    {
+        this.characterId = id;
+    }
+
+    @Override
+    public String getCharacterId()
+    {
+        return this.characterId;
     }
 
     @Override

@@ -50,6 +50,7 @@ public class BlinkEmitter extends Emitter implements Runnable
     private Thread theThread = null;
     private Logger logger = LoggerFactory.getLogger(BlinkEmitter.class.getName());
     private String id = null;
+    private String characterId = null;
 
     /** The realizerbridge */
     protected RealizerPort realizerBridge = null;
@@ -123,15 +124,22 @@ public class BlinkEmitter extends Emitter implements Runnable
 
     protected void emitBlink()
     {
+        String _characterId = "";
+        String _bmlId = "blinkbml";
+        if (characterId != null) {
+            _characterId = " characterId=\""+characterId+"\" ";
+            _bmlId = characterId+_bmlId;
+        }
+
         lastblink = System.currentTimeMillis();
-        scheduling = "composition=\"APPEND-AFTER(blinkbml" + blinkcount + ")\"";
+        scheduling = "composition=\"APPEND-AFTER("+_bmlId + blinkcount + ")\"";
         String interrupter = "";
         if(blinkcount>1)
         {
-            interrupter = " bmla:interrupt=\"blinkbml"+blinkcount+"\" ";
+            interrupter = " bmla:interrupt=\""+_bmlId +blinkcount+"\" ";
         }
         
-        String bml = "<bml xmlns=\"http://www.bml-initiative.org/bml/bml-1.0\" " + "id=\"blinkbml" + (blinkcount + 1) + "\" " + scheduling +interrupter
+        String bml = "<bml xmlns=\"http://www.bml-initiative.org/bml/bml-1.0\" " + _characterId +" id=\"" + _bmlId + (blinkcount + 1) + "\" " + scheduling +interrupter
                 + "xmlns:bmla=\"http://www.asap-project.org/bmla\"><faceLexeme id=\"b1\"  lexeme=\"BLINK\" start=\"0\" end=\"0.15\" "
                 + "amount=\"1\" attackPeak=\"0.03\" relax=\"0.12\"/>";        
         realizerBridge.performBML(bml + "</bml>");
@@ -201,6 +209,18 @@ public class BlinkEmitter extends Emitter implements Runnable
     public String getId()
     {
         return id;
+    }
+
+    @Override
+    public void setCharacterId(String characterId)
+    {
+        this.characterId = characterId;
+    }
+
+    @Override
+    public String getCharacterId()
+    {
+        return this.characterId;
     }
 
     static final String BMLTNAMESPACE = "http://hmi.ewi.utwente.nl/bmlt";

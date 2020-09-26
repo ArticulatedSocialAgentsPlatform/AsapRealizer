@@ -36,6 +36,9 @@ public abstract class Emitter
     public abstract void setRealizerPort(RealizerPort port);
     public abstract void setId(String id);
     public abstract String getId();
+
+    public abstract void setCharacterId(String id);
+    public abstract String getCharacterId();
     
     public static String namespace()
     {
