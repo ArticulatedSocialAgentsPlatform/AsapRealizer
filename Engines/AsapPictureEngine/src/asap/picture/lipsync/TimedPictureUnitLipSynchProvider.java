@@ -86,7 +86,7 @@ public class TimedPictureUnitLipSynchProvider implements LipSynchProvider {
         }
 
         // Convert duration to seconds
-        totalDuration = totalDuration / 1000d;
+        //totalDuration = totalDuration / 1000d;
         
         // Calculate amount of repetitions within speech duration
         int reps = (int) (totalDuration / pu.getPreferedDuration());

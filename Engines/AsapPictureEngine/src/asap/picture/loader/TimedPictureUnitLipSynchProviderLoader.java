@@ -18,6 +18,7 @@
  ******************************************************************************/
 package asap.picture.loader;
 
+import hmi.environmentbase.EmbodimentLoader;
 import hmi.environmentbase.Environment;
 import hmi.environmentbase.Loader;
 import hmi.xml.XMLStructureAdapter;
@@ -69,6 +70,12 @@ public class TimedPictureUnitLipSynchProviderLoader implements LipSynchProviderL
             }
             if (e instanceof PictureEmbodiment) {
                 pe = (PictureEmbodiment) e;
+            }
+            if (e instanceof EmbodimentLoader) {
+            	EmbodimentLoader el = (EmbodimentLoader) e;
+            	if (el.getEmbodiment() instanceof PictureEmbodiment) {
+                	pe = (PictureEmbodiment) el.getEmbodiment();
+            	}
             }
         }
 
