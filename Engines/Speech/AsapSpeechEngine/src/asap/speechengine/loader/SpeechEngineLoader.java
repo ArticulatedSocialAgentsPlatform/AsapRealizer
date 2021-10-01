@@ -263,6 +263,7 @@ public class SpeechEngineLoader implements EngineLoader
         TTSPlanner ttsPlanner = new TTSPlanner(are.getFeedbackManager(), ttsFactory, ttsBin, speechPlanManager);
         ttsPlanner.addAllLipSynchers(lipSyncProviders);
         ttsPlanner.addAllVisualProsodyProviders(visualProsodyProviders);
+        ttsPlanner.setCharacterId(characterId);
         
         return ttsPlanner;
     }

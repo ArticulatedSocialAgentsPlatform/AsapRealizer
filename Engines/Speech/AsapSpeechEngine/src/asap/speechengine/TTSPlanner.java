@@ -58,6 +58,7 @@ public class TTSPlanner extends AbstractPlanner<TimedTTSUnit>
     private static final double TIMEPEG_TOLERANCE = 0.003;
     private Collection<LipSynchProvider> lipSynchers = new ArrayList<LipSynchProvider>();
     private Collection<VisualProsodyProvider> visualProsodyProviders = new ArrayList<VisualProsodyProvider>();
+    private String charId;
 
     @Override
     public String toString()
@@ -100,6 +101,10 @@ public class TTSPlanner extends AbstractPlanner<TimedTTSUnit>
         ttsBinding.cleanup();
     }
 
+    public void setCharacterId(String charId) {
+        this.charId = charId;
+    }
+
     public void setSpeaker(String speaker)
     {
         synchronized (ttsBinding)
@@ -128,9 +133,11 @@ public class TTSPlanner extends AbstractPlanner<TimedTTSUnit>
                 voice = bSpeech.getStringParameterValue(BMLTBehaviour.BMLTNAMESPACE + ":" + "voice");
             }
 
-            // TODO: ultimately, this may be the characterId from the behavior -- but remember that characterId may be empty
             String voiceId = "voice1";
-
+            if (charId != null)
+            {
+                voiceId = charId;
+            }
             TimedTTSUnit bs = suFactory.createTimedTTSUnit(bbPeg, bSpeech.getContent(), voiceId, bSpeech.getBmlId(), bSpeech.id,
                     ttsBinding, b.getClass());
 
